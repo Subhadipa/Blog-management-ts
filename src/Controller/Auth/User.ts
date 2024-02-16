@@ -4,7 +4,7 @@ import { userRegistrationResponseType } from "../../Lib/DataTypes/Responses/Auth
 import { Res } from "../../Lib/DataTypes/Common"
 import userModel from "../../Model/User"
 import jwt from "jsonwebtoken" 
-
+import { genSalt, hash } from "bcrypt-ts";
 const createToken = (data: Record<string, any>): string => {
 	return jwt.sign(data, process.env.JWT_SECRET ?? "")
 }
@@ -17,8 +17,10 @@ const userRegistration=async(req:Request<any,any,userRegistrationRequestType>,re
 	  if(userDetails!==null){
 		return res.status(400).send({status:false,message:"Already email exist in db!"})
 	  }
-
-      await userModel.create(req.body)
+	  const salt = await genSalt(10);
+	  const hashedPassword = await hash(password, salt);
+	  password=hashedPassword
+      await userModel.create({req.body})
 	}catch(error){
 
 	}
