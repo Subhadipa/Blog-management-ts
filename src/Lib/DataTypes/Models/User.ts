@@ -1,11 +1,12 @@
-export type commonModelType={
-    timestamps?:Date
-    isDeleted?:Boolean
-}
+export type commonModelType = {
+  isDeleted?: boolean;
+  timestamps?: Date;
+};
 
-export type userModelType<T=Record<string,any>>=T &{
-     name:String
-	 email:String
-	 password:String
-     token:String
-}
+export type userModelType<T = Record<string, any>> = T & {
+  name: string;
+  email: string;
+  password: string;
+  token: string;
+  comparePasswords?(userPassword: string): boolean;
+};

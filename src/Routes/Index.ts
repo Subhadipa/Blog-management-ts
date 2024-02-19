@@ -5,9 +5,8 @@ import UserRouter from "./User"
 
 const Route: Router = Router()
 
-Route.post("/user/login", UserAuthController.login)
-Route.post("/user/register", UserAuthController.register)
-
+Route.post("/user/register", UserAuthController.userRegistration)
+Route.post("/user/login", UserAuthController.userLogin)
 Route.use(middleware)
 
 Route.use("/user", UserRouter)
